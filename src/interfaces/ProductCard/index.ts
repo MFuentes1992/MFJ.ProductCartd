@@ -10,4 +10,5 @@ export interface IProductCard {
 export interface IProductCardProps {
     product: IProductCard,
     children: React.ReactElement | React.ReactElement[],
+    className: string;
   }

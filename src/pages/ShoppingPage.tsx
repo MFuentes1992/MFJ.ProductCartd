@@ -12,10 +12,10 @@ const Producto: IProductCard = {
 
 export const ShoppingPage = () => {
   return (
-    <ProductCard product={Producto}>
-        <Components.ProductImg />
-        <Components.ProductTitle/>
-        <Components.ProductButtons/>
+    <ProductCard product={Producto} className="bg-gray">
+        <Components.ProductImg className='custom-image'/>
+        <Components.ProductTitle className='txt-white'/>
+        <Components.ProductButtons className='brd-white'/>
     </ProductCard>
   )
 }

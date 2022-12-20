@@ -1,0 +1,22 @@
+.bg-light-gray {
+    background-color: lightgrey;
+}
+
+.bg-gray {
+    background-color: gray;
+}
+
+.txt-white {
+    color: #FFF;
+    font-weight: 800;
+}
+
+.custom-image {
+    border-radius: 20px;
+    margin: auto;
+    width: calc(100% - 20px);
+}
+
+.brd-white button, .brd-white div{
+    border-color: #FFF;
+}
