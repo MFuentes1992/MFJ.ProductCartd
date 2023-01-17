@@ -1,4 +1,5 @@
 export interface IProductCard {
+    id: number;
     img?: string;
     title: string;
     counter?: number;
@@ -11,4 +12,13 @@ export interface IProductCardProps {
     product: IProductCard,
     children: React.ReactElement | React.ReactElement[],
     className: string;
+    onChange?: (_c: number, _p:IProductCard) => void;
+  }
+
+  export interface IProductCounter extends IProductCard {
+    count: number;
+  }
+
+  export interface IProductInCart {
+    [key: string]: IProductCounter;
   }
