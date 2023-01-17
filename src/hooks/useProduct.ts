@@ -8,7 +8,7 @@ export const useProduct = ({onChange, Product}: {onChange: ((_c: number, product
  const incrementBy = (n: number) => {
    const val = Math.max(counter + n, 0);
    setCounter(val);
-   onChange && onChange(counter, Product);
+   onChange && onChange(val, Product);
  }
 
  return { counter, incrementBy };

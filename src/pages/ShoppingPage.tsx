@@ -22,11 +22,20 @@ export const ShoppingPage = () => {
 
   const [productShowcase] = useState<IProductCard[]>([Producto1, Producto2]);
 
-  // -- const [productsCart] = useState<IProductInCart>({})
-  const handleCounterChange = (counter: number, Product: IProductCard) => {
-    console.log(counter);
-    console.log(Product);
-    
+  const [productsCart, setProductsCart] = useState<IProductInCart>({})
+  const handleCounterChange = (counter: number, Product: IProductCard) => {  
+    if(counter === 0) {
+      setProductsCart((prev) => {
+        const tmp:IProductInCart  = {}
+        Object.keys(prev).forEach((key) => {
+          if(key !== `${Product.id}`)
+            tmp[key] = prev[key];
+        })
+        return tmp;
+      })
+    }  else {
+      setProductsCart((prev) => ({...prev, [`${Product.id}`]: {...Product, count: counter}})); 
+    }
     
   }
 
@@ -41,6 +50,13 @@ export const ShoppingPage = () => {
           </ProductCard>  
         ))
       }
+      <div>
+        <code>
+          {
+            JSON.stringify(productsCart)
+          }
+        </code>
+      </div>
     </>
 
   )
