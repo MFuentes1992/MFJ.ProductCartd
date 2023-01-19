@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Cart from "../components/molecules/atoms/Cart";
 import Components from "../components/molecules/atoms/Product";
 import { ProductCard } from "../components/molecules/ProductCard";
+import { useShoppingCart } from "../hooks/useShoppingCart";
 import { IProductCard, IProductInCart } from "../interfaces/ProductCard";
 import styles from "../styles/styles.module.css";
 import "../styles/theme.css";
@@ -21,30 +22,7 @@ const Producto2: IProductCard = {
 export const ShoppingPage = () => {
 	const [productShowcase] = useState<IProductCard[]>([Producto1, Producto2]);
 
-	const [productsCart, setProductsCart] = useState<IProductInCart>({});
-
-	// -- Handlers
-	const handleCounterChange = (counter: number, Product: IProductCard) => {
-		setProductsCart((oldCart) => {
-			const pInCart: any = productsCart[`${Product.id}`] || {
-				...Product,
-				count: 0,
-			};
-			if (Math.max(pInCart.count + counter, 0) > 0) {
-				pInCart.count += counter;
-				return {
-					...oldCart,
-					[`${Product.id}`]: pInCart,
-				};
-			}
-
-			const tmp: IProductInCart = {};
-			Object.keys(oldCart).forEach((key) => {
-				if (key !== `${Product.id}`) tmp[key] = oldCart[key];
-			});
-			return tmp;
-		});
-	};
+	const { productsCart, handler: handleCounterChange } = useShoppingCart();
 
 	return (
 		<>
