@@ -1,16 +1,18 @@
-import { useState } from "react"
-import { IProductCard } from "../interfaces/ProductCard";
+import { useEffect, useState } from "react";
+import { IUseProduct } from "../interfaces/useProduct";
 
+export const useProduct = ({ onChange, Product, value = 0 }: IUseProduct) => {
+	const [counter, setCounter] = useState<number>(value);
 
-export const useProduct = ({onChange, Product}: {onChange: ((_c: number, product: IProductCard) => void) | undefined; Product: IProductCard}) => {
- const [ counter, setCounter] = useState<number>(0);
+	useEffect(() => {
+		setCounter(value);
+	}, [value]);
 
- const incrementBy = (n: number) => {
-   const val = Math.max(counter + n, 0);
-   setCounter(val);
-   onChange && onChange(val, Product);
- }
+	const incrementBy = (n: number) => {
+		const val = Math.max(counter + n, 0);
+		setCounter(val);
+		onChange && onChange(val, Product);
+	};
 
- return { counter, incrementBy };
-
-}
+	return { counter, incrementBy };
+};

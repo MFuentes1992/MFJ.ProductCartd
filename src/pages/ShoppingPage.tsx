@@ -22,6 +22,8 @@ export const ShoppingPage = () => {
 	const [productShowcase] = useState<IProductCard[]>([Producto1, Producto2]);
 
 	const [productsCart, setProductsCart] = useState<IProductInCart>({});
+
+	// -- Handlers
 	const handleCounterChange = (counter: number, Product: IProductCard) => {
 		if (counter === 0) {
 			setProductsCart((prev) => {
@@ -58,7 +60,9 @@ export const ShoppingPage = () => {
 			<Cart styles={styles} sx={{ width: "200px" }}>
 				{Object.keys(productsCart).map((key) => (
 					<ProductCard
+						key={key}
 						product={productsCart[key]}
+						value={productsCart[key].count}
 						className='bg-gray'
 						styles={styles}
 						sx={{ width: "150px" }}
@@ -70,10 +74,6 @@ export const ShoppingPage = () => {
 					</ProductCard>
 				))}
 			</Cart>
-
-			<div>
-				<code>{JSON.stringify(productsCart)}</code>
-			</div>
 		</>
 	);
 };

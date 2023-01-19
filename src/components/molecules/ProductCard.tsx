@@ -12,13 +12,18 @@ interface IProductCardCustom extends IProductCardProps {
 
 export const ProductCard = ({
 	product,
+	value,
 	children,
 	className,
 	styles,
 	sx,
 	onChange,
 }: IProductCardCustom) => {
-	const { counter, incrementBy } = useProduct({ onChange, Product: product });
+	const { counter, incrementBy } = useProduct({
+		onChange,
+		Product: product,
+		value,
+	});
 
 	return (
 		<Provider
@@ -41,4 +46,5 @@ export const ProductCard = ({
 ProductCard.defaultProps = {
 	styles: {},
 	sx: {},
+	value: 0,
 };
