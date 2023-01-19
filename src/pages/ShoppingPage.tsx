@@ -25,20 +25,25 @@ export const ShoppingPage = () => {
 
 	// -- Handlers
 	const handleCounterChange = (counter: number, Product: IProductCard) => {
-		if (counter === 0) {
-			setProductsCart((prev) => {
-				const tmp: IProductInCart = {};
-				Object.keys(prev).forEach((key) => {
-					if (key !== `${Product.id}`) tmp[key] = prev[key];
-				});
-				return tmp;
+		setProductsCart((oldCart) => {
+			const pInCart: any = productsCart[`${Product.id}`] || {
+				...Product,
+				count: 0,
+			};
+			if (Math.max(pInCart.count + counter, 0) > 0) {
+				pInCart.count += counter;
+				return {
+					...oldCart,
+					[`${Product.id}`]: pInCart,
+				};
+			}
+
+			const tmp: IProductInCart = {};
+			Object.keys(oldCart).forEach((key) => {
+				if (key !== `${Product.id}`) tmp[key] = oldCart[key];
 			});
-		} else {
-			setProductsCart((prev) => ({
-				...prev,
-				[`${Product.id}`]: { ...Product, count: counter },
-			}));
-		}
+			return tmp;
+		});
 	};
 
 	return (
