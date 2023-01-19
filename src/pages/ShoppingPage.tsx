@@ -49,6 +49,7 @@ export const ShoppingPage = () => {
 					product={p}
 					className='bg-gray'
 					styles={styles}
+					value={productsCart[`${p.id}`]?.count || 0}
 					onChange={(counter: number, Product: IProductCard) =>
 						handleCounterChange(counter, Product)
 					}>
