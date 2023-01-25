@@ -79,3 +79,9 @@
 	margin-bottom: 15px;
 	background-color: red;
 }
+
+.disabled {
+	border: 1px solid lightgray !important;
+	border-left: 1px solid white !important;
+	background-color: lightgrey !important;
+}

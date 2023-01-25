@@ -1,6 +1,10 @@
 import React, { Children, useContext } from "react";
 import { useProduct } from "../../hooks/useProduct";
-import { IProductCard, IProductCardProps } from "../../interfaces/ProductCard";
+import {
+	IInitialValues,
+	IProductCard,
+	IProductCardProps,
+} from "../../interfaces/ProductCard";
 
 export const productContext = React.createContext({} as IProductCard);
 const { Provider } = productContext;
@@ -8,9 +12,11 @@ const { Provider } = productContext;
 interface IProductCardCustom extends IProductCardProps {
 	styles?: any;
 	sx?: { [key: string]: string };
+	initialValues: IInitialValues;
 }
 
 export const ProductCard = ({
+	initialValues,
 	product,
 	value,
 	children,
@@ -19,11 +25,13 @@ export const ProductCard = ({
 	sx,
 	onChange,
 }: IProductCardCustom) => {
-	const { counter, incrementBy } = useProduct({
-		onChange,
-		Product: product,
-		value,
-	});
+	const { counter, maxCount, isMaxCountReached, incrementBy, reset } =
+		useProduct({
+			onChange,
+			Product: product,
+			value,
+			initialValues,
+		});
 
 	return (
 		<Provider
@@ -32,12 +40,19 @@ export const ProductCard = ({
 				title: product.title,
 				img: product?.img || undefined,
 				counter,
+				maxCount,
 				onAdd: () => incrementBy(1),
 				onSubtract: () => incrementBy(-1),
 				styles,
 			}}>
 			<div className={styles.productCard + " " + className} style={sx}>
-				{children}
+				{children({
+					count: counter,
+					maxCount,
+					isMaxCountReached,
+					reset,
+					incrementBy,
+				})}
 			</div>
 		</Provider>
 	);
@@ -47,4 +62,6 @@ ProductCard.defaultProps = {
 	styles: {},
 	sx: {},
 	value: 0,
+	count: 0,
+	maxCount: 0,
 };

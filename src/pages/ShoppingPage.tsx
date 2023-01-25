@@ -11,53 +11,47 @@ const Producto1: IProductCard = {
 	id: 1,
 	img: "./coffee-mug.png",
 	title: "Test title",
+	counter: 0,
+	maxCount: 0,
 };
 
 const Producto2: IProductCard = {
 	id: 2,
 	img: "./coffee-mug2.png",
 	title: "Coffee mug - meme",
+	counter: 0,
+	maxCount: 0,
 };
 
+// -- This will be removed.
+console.log(Producto2);
+
 export const ShoppingPage = () => {
-	const [productShowcase] = useState<IProductCard[]>([Producto1, Producto2]);
-
-	const { productsCart, handler: handleCounterChange } = useShoppingCart();
-
 	return (
 		<>
-			{productShowcase.map((p) => (
-				<ProductCard
-					key={p.id}
-					product={p}
-					className='bg-gray'
-					styles={styles}
-					value={productsCart[`${p.id}`]?.count || 0}
-					onChange={(counter: number, Product: IProductCard) =>
-						handleCounterChange(counter, Product)
-					}>
-					<Components.ProductImg className='custom-image' />
-					<Components.ProductTitle className='txt-white' />
-					<Components.ProductButtons className='brd-white' />
-				</ProductCard>
-			))}
-			<Cart styles={styles} sx={{ width: "200px" }}>
-				{Object.keys(productsCart).map((key) => (
-					<ProductCard
-						key={key}
-						product={productsCart[key]}
-						value={productsCart[key].count}
-						className='bg-gray'
-						styles={styles}
-						sx={{ width: "150px" }}
-						onChange={(counter: number, Product: IProductCard) =>
-							handleCounterChange(counter, Product)
-						}>
+			<ProductCard
+				initialValues={{ count: 4, maxCount: 10 }}
+				key={Producto1.id}
+				product={Producto1}
+				className='bg-gray'
+				value={0}
+				styles={styles}>
+				{({ count, maxCount, isMaxCountReached, reset, incrementBy }) => (
+					<>
 						<Components.ProductImg className='custom-image' />
+						<Components.ProductTitle className='txt-white' />
 						<Components.ProductButtons className='brd-white' />
-					</ProductCard>
-				))}
-			</Cart>
+						<button onClick={reset}>Reset</button>
+						{!isMaxCountReached && (
+							<button onClick={() => incrementBy(-2)}> - 2</button>
+						)}
+						{!isMaxCountReached && (
+							<button onClick={() => incrementBy(2)}> + 2</button>
+						)}
+						<span>{count}</span>
+					</>
+				)}
+			</ProductCard>
 		</>
 	);
 };
