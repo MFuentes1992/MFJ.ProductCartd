@@ -23,9 +23,6 @@ const Producto2: IProductCard = {
 	maxCount: 0,
 };
 
-// -- This will be removed.
-console.log(Producto2);
-
 export const ShoppingPage = () => {
 	return (
 		<>
@@ -48,7 +45,6 @@ export const ShoppingPage = () => {
 						{!isMaxCountReached && (
 							<button onClick={() => incrementBy(2)}> + 2</button>
 						)}
-						<span>{count}</span>
 					</>
 				)}
 			</ProductCard>
